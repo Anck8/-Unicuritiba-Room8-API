@@ -14,7 +14,7 @@ import java.sql.SQLException;
 
 public class Conexao {
     private static final String banco = 
-            "jdbc:mysql://localhost:3306/pi_teste";
+            "jdbc:mysql://localhost:3306/ROOM8";
     /**
      * O atributo driver representa a classe do Driver JDBC que será usada na 
      * conexão. Quando se utiliza outros bancos usa-se a classe apropriada a 

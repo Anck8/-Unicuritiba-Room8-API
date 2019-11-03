@@ -15,7 +15,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.POST;
 import javax.ws.rs.GET;
+import static javax.ws.rs.HttpMethod.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
@@ -34,30 +36,33 @@ public class PI4WS {
     @Context
     private UriInfo context;
 
-    /**
-     * Creates a new instance of PI4WS
-     */
+
     public PI4WS() {
     }
-
-    /**
-     * Retrieves representation of an instance of WS.PI4WS
-     * @return an instance of java.lang.String
-     */
+    
+    //Select all
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getJson() {
-    return "teste";
+    @Path("Usuario/lista")
+    public String listar(){
+    
+        List<Usuario> lista;    
+        UsuarioDAO dao= new UsuarioDAO();        
+        
+        lista = dao.listar();
+        Gson g = new Gson();
+        return g.toJson(lista);
+    
     }
     
     
-    
+    //Select com where
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("Usuario/get/{login}")
-    public String getUsuario(@PathParam("login") String login){
+    public String buscar(@PathParam("login") int ID_USUARIO){
         Usuario u = new Usuario();
-        u.setLogin(login);
+        u.setID_USUARIO(ID_USUARIO);
         
         UsuarioDAO dao = new UsuarioDAO();
         u = dao.buscar(u);
@@ -68,50 +73,45 @@ public class PI4WS {
     
     }
 
-    
-    
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("Usuario/lista")
-    public String listaUsuario(){
-        
-        
-        List<Usuario> lista;
-    
-        UsuarioDAO dao= new UsuarioDAO();        
-        lista = dao.listar();        
-       
-        
-        
-        
+    //Insert tabela Usuario
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Path("Usuario/inserir")
+    public boolean inserir(String content){
         Gson g = new Gson();
-        return g.toJson(lista);
-    
-    
+        Usuario u = (Usuario) g.fromJson(content, Usuario.class);
+        
+        UsuarioDAO dao = new UsuarioDAO();
+        return dao.inserir(u);
     }
-    
+
+   
+    //delete com where
     @DELETE
     @Path("Usuario/excluir/{login}")
-    public boolean excluir (@PathParam("login")String login)
-    
-    {        
+    public boolean excluir (@PathParam("login")int ID_USUARIO){        
         
         Usuario u = new Usuario();
-        u.setLogin(login);
+        u.setID_USUARIO(ID_USUARIO);
         
         UsuarioDAO dao = new UsuarioDAO();
         u = dao.buscar(u);              
-        return dao.excluir(u);
-    
-        
+        return dao.excluir(u); 
         
     }
     
+
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("Usuario/alterar")
+    public void alterar (String content){
+    Gson g = new Gson();
+    Usuario u = (Usuario) g.fromJson(content, Usuario.class);
+    UsuarioDAO dao = new UsuarioDAO();
+    dao.atualizar(u);
+    }
     
-    /**
-     * PUT method for updating or creating an instance of PI4WS
-     * @param content representation for the resource
-     */
+    
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public void putJson(String content) {

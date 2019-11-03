@@ -12,42 +12,62 @@ package modelo;
  */
 public class Usuario {
     
-    private String login;
-    private String senha;
-    private String email;
-    private String perfil;
+    private int ID_USUARIO;
+    private String NOME;
+    private String CPF;
+    private String EMAIL;
+    private String SENHA;
+    private String TP_CADASTRO;
 
-    public String getLogin() {
-        return login;
+    public int getID_USUARIO() {
+        return ID_USUARIO;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setID_USUARIO(int ID_USUARIO) {
+        this.ID_USUARIO = ID_USUARIO;
     }
 
-    public String getSenha() {
-        return senha;
+    public String getNOME() {
+        return NOME;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setNOME(String NOME) {
+        this.NOME = NOME;
     }
 
-    public String getEmail() {
-        return email;
+    public String getCPF() {
+        return CPF;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setCPF(String CPF) {
+        this.CPF = CPF;
     }
 
-    public String getPerfil() {
-        return perfil;
+    public String getEMAIL() {
+        return EMAIL;
     }
 
-    public void setPerfil(String perfil) {
-        this.perfil = perfil;
+    public void setEMAIL(String EMAIL) {
+        this.EMAIL = EMAIL;
     }
+
+    public String getSENHA() {
+        return SENHA;
+    }
+
+    public void setSENHA(String SENHA) {
+        this.SENHA = SENHA;
+    }
+
+    public String getTP_CADASTRO() {
+        return TP_CADASTRO;
+    }
+
+    public void setTP_CADASTRO(String TP_CADASTRO) {
+        this.TP_CADASTRO = TP_CADASTRO;
+    }
+
+
     
     
     
