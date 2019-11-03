@@ -105,7 +105,8 @@ public class PI4WS {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("Usuario/alterar")
     public void alterar (String content){
-    Gson g = new Gson();
+    //teste
+        Gson g = new Gson();
     Usuario u = (Usuario) g.fromJson(content, Usuario.class);
     UsuarioDAO dao = new UsuarioDAO();
     dao.atualizar(u);
