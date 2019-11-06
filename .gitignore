@@ -1,1 +1,3 @@
 /dist/
+#Ignore META-INF
+META-INF
