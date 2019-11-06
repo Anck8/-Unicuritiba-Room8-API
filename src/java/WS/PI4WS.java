@@ -105,14 +105,20 @@ public class PI4WS {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("Usuario/alterar/")
     public boolean alterar (String content){
-        Usuario u = new Usuario();
 
-
-                UsuarioDAO dao = new UsuarioDAO();
+        Gson g = new Gson();
+        Usuario u = (Usuario) g.fromJson(content, Usuario.class);
+        u.setID_USUARIO(u.getID_USUARIO());        
+        
+        UsuarioDAO dao = new UsuarioDAO();
+        
+           return dao.atualizar(u);   
               
-       return dao.atualizar(u);
         
     }
+    
+    
+    
     
     
     @PUT
