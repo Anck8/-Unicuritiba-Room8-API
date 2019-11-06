@@ -38,7 +38,7 @@ public class UsuarioDAO {
             ResultSet res = pst.executeQuery();
             while(res.next())
             {
-                Usuario item = new Usuario();
+                Usuario item = new Usuario(0, sql, sql, sql, sql, sql);
                 item.setID_USUARIO(res.getInt("ID_USUARIO"));
                 item.setNOME(res.getString("NOME")); 
                 item.setCPF(res.getString("CPF"));              
@@ -74,7 +74,7 @@ public class UsuarioDAO {
             
             if(res.next())
             {
-                retorno = new Usuario();
+                retorno = new Usuario(0, sql, sql, sql, sql, sql);
                 retorno.setID_USUARIO(res.getInt("ID_USUARIO"));
                 retorno.setNOME(res.getString("NOME"));
                 retorno.setCPF(res.getString("CPF"));

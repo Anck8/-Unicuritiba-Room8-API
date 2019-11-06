@@ -61,7 +61,7 @@ public class PI4WS {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("Usuario/get/{login}")
     public String buscar(@PathParam("login") int ID_USUARIO){
-        Usuario u = new Usuario();
+        Usuario u = new Usuario(ID_USUARIO, POST, POST, POST, POST, POST);
         u.setID_USUARIO(ID_USUARIO);
         
         UsuarioDAO dao = new UsuarioDAO();
@@ -91,7 +91,7 @@ public class PI4WS {
     @Path("Usuario/excluir/{login}")
     public boolean excluir (@PathParam("login")int ID_USUARIO){        
         
-        Usuario u = new Usuario();
+        Usuario u = new Usuario(ID_USUARIO, POST, POST, POST, POST, POST);
         u.setID_USUARIO(ID_USUARIO);
         
         UsuarioDAO dao = new UsuarioDAO();
@@ -103,13 +103,15 @@ public class PI4WS {
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("Usuario/alterar")
-    public void alterar (String content){
-    //teste
-        Gson g = new Gson();
-    Usuario u = (Usuario) g.fromJson(content, Usuario.class);
-    UsuarioDAO dao = new UsuarioDAO();
-    dao.atualizar(u);
+    @Path("Usuario/alterar/")
+    public boolean alterar (String content){
+        Usuario u = new Usuario();
+
+
+                UsuarioDAO dao = new UsuarioDAO();
+              
+       return dao.atualizar(u);
+        
     }
     
     
