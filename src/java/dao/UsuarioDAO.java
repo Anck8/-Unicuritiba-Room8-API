@@ -125,7 +125,7 @@ public class UsuarioDAO {
     }
     public boolean atualizar(Usuario usuario)
     {
-        String sql = "UPDATE USUARIO set NOME=?,CPF=?,EMAIL=?,SENHA=?,TP_CADASTRO=? where ID_USUARIO=?";
+        String sql = "UPDATE USUARIO set NOME=?,CPF=?,EMAIL=?,SENHA=?,TP_CADASTRO=? where CPF=?";
         Boolean retorno = false;
         PreparedStatement pst = Conexao.getPreparedStatement(sql);
         try {
@@ -135,6 +135,7 @@ public class UsuarioDAO {
             pst.setString(3, usuario.getEMAIL());
             pst.setString(4, usuario.getSENHA());
             pst.setString(5, usuario.getTP_CADASTRO());
+            pst.setString(6, usuario.getCPF());
             if(pst.executeUpdate()>0)
             {
                 retorno = true;
