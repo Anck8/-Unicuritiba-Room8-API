@@ -6,7 +6,9 @@
 package WS;
 
 import com.google.gson.Gson;
+import dao.Tp_cadastroDAO;
 import dao.UsuarioDAO;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.core.Context;
@@ -23,6 +25,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import modelo.Tp_cadastro;
 import modelo.Usuario;
 
 /**
@@ -47,11 +50,25 @@ public class PI4WS {
     public String listar(){
     
         List<Usuario> lista;    
+        List<Tp_cadastro> lista_tp;    
+
         UsuarioDAO dao= new UsuarioDAO();        
+        Tp_cadastroDAO dao_= new Tp_cadastroDAO();        
         
         lista = dao.listar();
+        lista_tp = dao_.listar();
+
         Gson g = new Gson();
-        return g.toJson(lista);
+        Gson d = new Gson();
+        Gson a = new Gson();
+
+        d.toJson(lista_tp);
+        g.toJson(lista) ;
+       return a.toJson(g);
+        
+
+        
+        
     
     }
     
@@ -102,19 +119,14 @@ public class PI4WS {
     
 
     @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Path("Usuario/alterar/")
-    public boolean alterar (String content){
-
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Path("Usuario/alterar")
+    public boolean alterar(String content){
         Gson g = new Gson();
         Usuario u = (Usuario) g.fromJson(content, Usuario.class);
-        u.setID_USUARIO(u.getID_USUARIO());        
         
         UsuarioDAO dao = new UsuarioDAO();
-        
-           return dao.atualizar(u);   
-              
-        
+        return dao.atualizar(u);
     }
     
     
@@ -124,5 +136,23 @@ public class PI4WS {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public void putJson(String content) {
+    }
+
+//Metodos Testes para cadastrar no banco o tipo de usuario
+
+    
+    //Selecet all
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("Usuario/listar_tp")
+    public String listar_tp(){
+    
+        List<Tp_cadastro> lista;    
+        Tp_cadastroDAO dao= new Tp_cadastroDAO();        
+        
+        lista = dao.listar();
+        Gson g = new Gson();
+        return g.toJson(lista);
+    
     }
 }
