@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import modelo.Banco;
+import modelo.Telefone;
 import modelo.Usuario;
 
 
@@ -26,10 +28,24 @@ public class UsuarioDAO {
 
    
        
-    public List<Usuario> listar()
+    public List<Banco> listar()
     {
-         String sql = "SELECT * FROM USUARIO";
-        List<Usuario> retorno = new ArrayList<Usuario>();
+         String sql = 
+        "select \n" +
+        "usuario.nome,\n" +
+        "usuario.cpf,\n" +
+        "usuario.email,\n" +
+        "usuario.senha,\n" +
+        "telefone.tel,\n" +
+        "tp_cadastro.desc_cad\n" +
+        "from usuario " +
+        "inner join telefone " + 
+        "inner join tp_cadastro " + 
+        "on tp_cadastro.ID_TP_CAD = usuario.tp_cadastro \n" +
+        "and usuario.id_usuario = telefone.usuario";
+        
+         List<Banco> retorno = new ArrayList<Banco>();
+
         
         PreparedStatement pst = Conexao.getPreparedStatement(sql);
         try {
@@ -38,13 +54,13 @@ public class UsuarioDAO {
             ResultSet res = pst.executeQuery();
             while(res.next())
             {
-                Usuario item = new Usuario(0, sql, sql, sql, sql, sql);
-                item.setID_USUARIO(res.getInt("ID_USUARIO"));
+                Banco item = new Banco(sql, sql, sql, sql, sql, sql);
                 item.setNOME(res.getString("NOME")); 
                 item.setCPF(res.getString("CPF"));              
                 item.setEMAIL(res.getString("EMAIL"));              
                 item.setSENHA(res.getString("SENHA"));              
-                item.setTP_CADASTRO(res.getString("TP_CADASTRO"));              
+                item.setTEL(res.getString("tel"));              
+                item.setDESC_CAD(res.getString("DESC_CAD"));              
 
                 
                 retorno.add(item);

@@ -25,6 +25,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import modelo.Banco;
 import modelo.Tp_cadastro;
 import modelo.Usuario;
 
@@ -49,22 +50,14 @@ public class PI4WS {
     @Path("Usuario/lista")
     public String listar(){
     
-        List<Usuario> lista;    
-        List<Tp_cadastro> lista_tp;    
-
-        UsuarioDAO dao= new UsuarioDAO();        
-        Tp_cadastroDAO dao_= new Tp_cadastroDAO();        
-        
+        List<Banco> lista; 
+        UsuarioDAO dao= new UsuarioDAO();
+        Banco u = new Banco(POST, POST, POST, POST, POST, POST);
         lista = dao.listar();
-        lista_tp = dao_.listar();
 
         Gson g = new Gson();
-        Gson d = new Gson();
-        Gson a = new Gson();
-
-        d.toJson(lista_tp);
-        g.toJson(lista) ;
-       return a.toJson(g);
+        
+       return g.toJson(lista);
        //data
         
 
