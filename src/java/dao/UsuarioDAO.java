@@ -125,32 +125,32 @@ public class UsuarioDAO {
     
     }
     
-    public boolean inserir(Usuario usuario)
-    {
-        String sql = "INSERT INTO USUARIO(NOME,CPF,EMAIL,SENHA,TP_CADASTRO) VALUES(?,?,?,?,?)";
-        Boolean retorno = false;
-        PreparedStatement pst = Conexao.getPreparedStatement(sql);
-        try {
-            pst.setString(1, usuario.getNOME());
-            pst.setString(2, usuario.getCPF());
-            pst.setString(3, usuario.getEMAIL());
-            pst.setString(4, usuario.getSENHA());
-            pst.setString(5, usuario.getTP_CADASTRO());
-            if(pst.executeUpdate()>0)
-            {
-                retorno = true;
-            }
-                
-            
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-            retorno = false;
-        }
-        
-        return retorno;
-    
-    }
+//    public boolean inserir(Banco banco)
+//    {
+//        String sql = "INSERT INTO USUARIO(NOME,CPF,EMAIL,SENHA,TP_CADASTRO) VALUES(?,?,?,?,?)";
+//        Boolean retorno = false;
+//        PreparedStatement pst = Conexao.getPreparedStatement(sql);
+//        try {
+//            pst.setString(1, usuario.getNOME());
+//            pst.setString(2, usuario.getCPF());
+//            pst.setString(3, usuario.getEMAIL());
+//            pst.setString(4, usuario.getSENHA());
+//            pst.setString(5, usuario.getTP_CADASTRO());
+//            if(pst.executeUpdate()>0)
+//            {
+//                retorno = true;
+//            }
+//                
+//            
+//            
+//        } catch (SQLException ex) {
+//            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+//            retorno = false;
+//        }
+//        
+//        return retorno;
+//    
+//    }
     
     public boolean atualizar(Usuario usuario)
     {
@@ -208,7 +208,7 @@ public class UsuarioDAO {
     } 
 
     public boolean logar (Usuario usuario) {
-        String sql = "SELECT * FROM USUARIO where EMAIL=? AND NOME=?";
+        String sql = "SELECT * FROM USUARIO where EMAIL=? AND SENHA=?";
         Boolean retorno = false;
         PreparedStatement pst = Conexao.getPreparedStatement(sql);
         try {

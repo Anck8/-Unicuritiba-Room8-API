@@ -39,6 +39,11 @@ public class Usuario {
         this.TP_CADASTRO = TP_CADASTRO;
     }
 
+    public Usuario(String EMAIL, String SENHA) {
+        this.EMAIL = EMAIL;
+        this.SENHA = SENHA;
+    }
+
     
     
     

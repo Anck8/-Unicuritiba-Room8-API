@@ -83,33 +83,49 @@ public class PI4WS {
     
     
     }
+    //logar retorna true of false
+    @GET
+    @Path("Usuario/get/logar/{email}/{senha}")
+    public boolean logar(@PathParam("email") String email,@PathParam("senha") String senha){
+        Usuario u = new Usuario(email, senha);
+        u.setEMAIL(email);
+        u.setSENHA(senha);        
+        UsuarioDAO dao = new UsuarioDAO();
+        dao.logar(u);
+        return dao.logar(u);
+    
+    
+    }
+    
+    
+    
 
     //Insert tabela Usuario
-    @POST
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Path("Usuario/inserir")
-    public boolean inserir(String content){
-        Gson g = new Gson();
-        Usuario u = (Usuario) g.fromJson(content, Usuario.class);
-        
-        UsuarioDAO dao = new UsuarioDAO();
-        return dao.inserir(u);
-    }
+//    @POST
+//    @Consumes({MediaType.APPLICATION_JSON})
+//    @Path("Usuario/inserir")
+//    public boolean inserir(String content){
+//        Gson g = new Gson();
+//        Banco u = (Banco) g.fromJson(content, Banco.class);
+//        
+//        UsuarioDAO dao = new UsuarioDAO();
+//        return dao.inserir(u);
+//    }
 
    
-    //delete com where
-    @DELETE
-    @Path("Usuario/excluir/{login}")
-    public boolean excluir (@PathParam("login")int ID_USUARIO){        
-        
-        Usuario u = new Usuario(ID_USUARIO, POST, POST, POST, POST, POST);
-        u.setID_USUARIO(ID_USUARIO);
-        
-        UsuarioDAO dao = new UsuarioDAO();
-        u = dao.buscar(u);              
-        return dao.excluir(u); 
-        
-    }
+//    //delete com where
+//    @DELETE
+//    @Path("Usuario/excluir/{login}")
+//    public boolean excluir (@PathParam("login")int ID_USUARIO){        
+//        
+//        Usuario u = new Usuario(ID_USUARIO, POST, POST, POST, POST, POST);
+//        u.setID_USUARIO(ID_USUARIO);
+//        
+//        UsuarioDAO dao = new UsuarioDAO();
+//        u = dao.buscar(u);              
+//        return dao.excluir(u); 
+//        
+//    }
     
 
     @PUT

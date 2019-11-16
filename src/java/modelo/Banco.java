@@ -66,6 +66,15 @@ private	String	IMAGEM_1	;
         this.TEL = TEL;
     }
 
+    public Banco(String NOME, String CPF, String EMAIL, String SENHA, int ID_TP_CAD, String TEL) {
+        this.NOME = NOME;
+        this.CPF = CPF;
+        this.EMAIL = EMAIL;
+        this.SENHA = SENHA;
+        this.ID_TP_CAD = ID_TP_CAD;
+        this.TEL = TEL;
+    }
+
     
 
 
