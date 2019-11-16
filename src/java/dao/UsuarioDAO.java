@@ -19,13 +19,13 @@ import modelo.Usuario;
 
 
 public class UsuarioDAO {
-
+    
     
     public UsuarioDAO()
     {
     
-    }    
-
+    }
+       
    
        
     public List<Banco> listar()
@@ -44,7 +44,7 @@ public class UsuarioDAO {
         "on tp_cadastro.ID_TP_CAD = usuario.tp_cadastro \n" +
         "and usuario.id_usuario = telefone.usuario";
         
-         List<Banco> retorno = new ArrayList<Banco>();
+        List<Banco> retorno = new ArrayList<Banco>();
 
         
         PreparedStatement pst = Conexao.getPreparedStatement(sql);
@@ -116,7 +116,7 @@ public class UsuarioDAO {
             
             
         } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);   
             
         }
         
@@ -124,6 +124,7 @@ public class UsuarioDAO {
     
     
     }
+    
     public boolean inserir(Usuario usuario)
     {
         String sql = "INSERT INTO USUARIO(NOME,CPF,EMAIL,SENHA,TP_CADASTRO) VALUES(?,?,?,?,?)";
@@ -150,6 +151,7 @@ public class UsuarioDAO {
         return retorno;
     
     }
+    
     public boolean atualizar(Usuario usuario)
     {
         String sql = "UPDATE USUARIO set NOME=?,CPF=?,EMAIL=?,SENHA=?,TP_CADASTRO=? where CPF=?";
@@ -178,6 +180,7 @@ public class UsuarioDAO {
         return retorno;
     
     }
+    
     public boolean excluir(Usuario usuario) 
     {
         
@@ -204,5 +207,21 @@ public class UsuarioDAO {
     
     } 
 
-
+    public boolean logar (Usuario usuario) {
+        String sql = "SELECT * FROM USUARIO where EMAIL=? AND NOME=?";
+        Boolean retorno = false;
+        PreparedStatement pst = Conexao.getPreparedStatement(sql);
+        try {
+            pst.setString(1, usuario.getEMAIL());
+            pst.setString(2, usuario.getSENHA());
+            ResultSet res = pst.executeQuery();
+            if(res.next()) {
+                retorno = true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            retorno = false;
+        }
+        return retorno;
+    } 
 }
