@@ -57,8 +57,8 @@ public class PI4WS {
 
         Gson g = new Gson();
         
-       return g.toJson(lista);
-       //data
+        return g.toJson(lista);
+        //data
         
 
         
@@ -67,13 +67,13 @@ public class PI4WS {
     }
     
     
-    //Select com where
+    //Select dados Usuario com where 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("Usuario/get/{login}")
-    public String buscar(@PathParam("login") int ID_USUARIO){
-        Usuario u = new Usuario(ID_USUARIO, POST, POST, POST, POST, POST);
-        u.setID_USUARIO(ID_USUARIO);
+    @Path("Usuario/get/{cpf}")
+    public String buscar(@PathParam("cpf") String cpf){
+        Banco u = new Banco(POST, cpf, cpf, cpf, cpf, cpf);
+        u.setCPF(cpf);
         
         UsuarioDAO dao = new UsuarioDAO();
         u = dao.buscar(u);

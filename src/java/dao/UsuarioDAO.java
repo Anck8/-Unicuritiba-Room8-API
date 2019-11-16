@@ -77,27 +77,38 @@ public class UsuarioDAO {
     
     
     }
-    public Usuario buscar(Usuario usuario)
+    public Banco buscar(Banco banco)
     {
-         String sql = "SELECT * FROM USUARIO where ID_USUARIO = ?";
-        Usuario retorno = null;
+        String sql = "select \n" +
+        "usuario.nome,\n" +
+        "usuario.cpf,\n" +
+        "usuario.email,\n" +
+        "usuario.senha,\n" +
+        "telefone.tel,\n" +
+        "tp_cadastro.desc_cad\n" +
+        "from usuario\n" +
+        "inner join telefone\n" +
+        "inner join tp_cadastro\n" +
+        "on tp_cadastro.ID_TP_CAD = usuario.tp_cadastro \n" +
+        "and usuario.id_usuario = telefone.usuario \n" +
+        "where usuario.cpf = ? ;";
+         Banco retorno = null;
         
         PreparedStatement pst = Conexao.getPreparedStatement(sql);
         try {
            
-            pst.setInt(1, usuario.getID_USUARIO());
+            pst.setString(1, banco.getCPF());
             ResultSet res = pst.executeQuery();
             
             if(res.next())
             {
-                retorno = new Usuario(0, sql, sql, sql, sql, sql);
-                retorno.setID_USUARIO(res.getInt("ID_USUARIO"));
+                retorno = new Banco(sql, sql, sql, sql, sql, sql);
                 retorno.setNOME(res.getString("NOME"));
                 retorno.setCPF(res.getString("CPF"));
                 retorno.setEMAIL(res.getString("EMAIL"));
                 retorno.setSENHA(res.getString("SENHA"));
-                retorno.setTP_CADASTRO(res.getString("TP_CADASTRO"));
-
+                retorno.setTEL(res.getString("tel"));              
+                retorno.setDESC_CAD(res.getString("DESC_CAD"));
                 
                 
             }
