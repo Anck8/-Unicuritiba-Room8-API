@@ -13,23 +13,39 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import modelo.Banco;
+import modelo.Telefone;
 import modelo.Usuario;
 
 
 public class UsuarioDAO {
-
+    
     
     public UsuarioDAO()
     {
     
-    }    
-
+    }
+       
    
        
-    public List<Usuario> listar()
+    public List<Banco> listar()
     {
-         String sql = "SELECT * FROM USUARIO";
-        List<Usuario> retorno = new ArrayList<Usuario>();
+         String sql = 
+        "select \n" +
+        "usuario.nome,\n" +
+        "usuario.cpf,\n" +
+        "usuario.email,\n" +
+        "usuario.senha,\n" +
+        "telefone.tel,\n" +
+        "tp_cadastro.desc_cad\n" +
+        "from usuario " +
+        "inner join telefone " + 
+        "inner join tp_cadastro " + 
+        "on tp_cadastro.ID_TP_CAD = usuario.tp_cadastro \n" +
+        "and usuario.id_usuario = telefone.usuario";
+        
+        List<Banco> retorno = new ArrayList<Banco>();
+
         
         PreparedStatement pst = Conexao.getPreparedStatement(sql);
         try {
@@ -38,13 +54,13 @@ public class UsuarioDAO {
             ResultSet res = pst.executeQuery();
             while(res.next())
             {
-                Usuario item = new Usuario(0, sql, sql, sql, sql, sql);
-                item.setID_USUARIO(res.getInt("ID_USUARIO"));
+                Banco item = new Banco(sql, sql, sql, sql, sql, sql);
                 item.setNOME(res.getString("NOME")); 
                 item.setCPF(res.getString("CPF"));              
                 item.setEMAIL(res.getString("EMAIL"));              
                 item.setSENHA(res.getString("SENHA"));              
-                item.setTP_CADASTRO(res.getString("TP_CADASTRO"));              
+                item.setTEL(res.getString("tel"));              
+                item.setDESC_CAD(res.getString("DESC_CAD"));              
 
                 
                 retorno.add(item);
@@ -61,27 +77,38 @@ public class UsuarioDAO {
     
     
     }
-    public Usuario buscar(Usuario usuario)
+    public Banco buscar(Banco banco)
     {
-         String sql = "SELECT * FROM USUARIO where ID_USUARIO = ?";
-        Usuario retorno = null;
+        String sql = "select \n" +
+        "usuario.nome,\n" +
+        "usuario.cpf,\n" +
+        "usuario.email,\n" +
+        "usuario.senha,\n" +
+        "telefone.tel,\n" +
+        "tp_cadastro.desc_cad\n" +
+        "from usuario\n" +
+        "inner join telefone\n" +
+        "inner join tp_cadastro\n" +
+        "on tp_cadastro.ID_TP_CAD = usuario.tp_cadastro \n" +
+        "and usuario.id_usuario = telefone.usuario \n" +
+        "where usuario.cpf = ? ;";
+         Banco retorno = null;
         
         PreparedStatement pst = Conexao.getPreparedStatement(sql);
         try {
            
-            pst.setInt(1, usuario.getID_USUARIO());
+            pst.setString(1, banco.getCPF());
             ResultSet res = pst.executeQuery();
             
             if(res.next())
             {
-                retorno = new Usuario(0, sql, sql, sql, sql, sql);
-                retorno.setID_USUARIO(res.getInt("ID_USUARIO"));
+                retorno = new Banco(sql, sql, sql, sql, sql, sql);
                 retorno.setNOME(res.getString("NOME"));
                 retorno.setCPF(res.getString("CPF"));
                 retorno.setEMAIL(res.getString("EMAIL"));
                 retorno.setSENHA(res.getString("SENHA"));
-                retorno.setTP_CADASTRO(res.getString("TP_CADASTRO"));
-
+                retorno.setTEL(res.getString("tel"));              
+                retorno.setDESC_CAD(res.getString("DESC_CAD"));
                 
                 
             }
@@ -89,7 +116,7 @@ public class UsuarioDAO {
             
             
         } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);   
             
         }
         
@@ -97,32 +124,34 @@ public class UsuarioDAO {
     
     
     }
-    public boolean inserir(Usuario usuario)
-    {
-        String sql = "INSERT INTO USUARIO(NOME,CPF,EMAIL,SENHA,TP_CADASTRO) VALUES(?,?,?,?,?)";
-        Boolean retorno = false;
-        PreparedStatement pst = Conexao.getPreparedStatement(sql);
-        try {
-            pst.setString(1, usuario.getNOME());
-            pst.setString(2, usuario.getCPF());
-            pst.setString(3, usuario.getEMAIL());
-            pst.setString(4, usuario.getSENHA());
-            pst.setString(5, usuario.getTP_CADASTRO());
-            if(pst.executeUpdate()>0)
-            {
-                retorno = true;
-            }
-                
-            
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-            retorno = false;
-        }
-        
-        return retorno;
     
-    }
+//    public boolean inserir(Banco banco)
+//    {
+//        String sql = "INSERT INTO USUARIO(NOME,CPF,EMAIL,SENHA,TP_CADASTRO) VALUES(?,?,?,?,?)";
+//        Boolean retorno = false;
+//        PreparedStatement pst = Conexao.getPreparedStatement(sql);
+//        try {
+//            pst.setString(1, usuario.getNOME());
+//            pst.setString(2, usuario.getCPF());
+//            pst.setString(3, usuario.getEMAIL());
+//            pst.setString(4, usuario.getSENHA());
+//            pst.setString(5, usuario.getTP_CADASTRO());
+//            if(pst.executeUpdate()>0)
+//            {
+//                retorno = true;
+//            }
+//                
+//            
+//            
+//        } catch (SQLException ex) {
+//            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+//            retorno = false;
+//        }
+//        
+//        return retorno;
+//    
+//    }
+    
     public boolean atualizar(Usuario usuario)
     {
         String sql = "UPDATE USUARIO set NOME=?,CPF=?,EMAIL=?,SENHA=?,TP_CADASTRO=? where CPF=?";
@@ -151,6 +180,7 @@ public class UsuarioDAO {
         return retorno;
     
     }
+    
     public boolean excluir(Usuario usuario) 
     {
         
@@ -177,5 +207,21 @@ public class UsuarioDAO {
     
     } 
 
-
+    public boolean logar (Usuario usuario) {
+        String sql = "SELECT * FROM USUARIO where EMAIL=? AND SENHA=?";
+        Boolean retorno = false;
+        PreparedStatement pst = Conexao.getPreparedStatement(sql);
+        try {
+            pst.setString(1, usuario.getEMAIL());
+            pst.setString(2, usuario.getSENHA());
+            ResultSet res = pst.executeQuery();
+            if(res.next()) {
+                retorno = true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            retorno = false;
+        }
+        return retorno;
+    } 
 }

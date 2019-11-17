@@ -25,6 +25,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import modelo.Banco;
 import modelo.Tp_cadastro;
 import modelo.Usuario;
 
@@ -49,23 +50,15 @@ public class PI4WS {
     @Path("Usuario/lista")
     public String listar(){
     
-        List<Usuario> lista;    
-        List<Tp_cadastro> lista_tp;    
-
-        UsuarioDAO dao= new UsuarioDAO();        
-        Tp_cadastroDAO dao_= new Tp_cadastroDAO();        
-        
+        List<Banco> lista; 
+        UsuarioDAO dao= new UsuarioDAO();
+        Banco u = new Banco(POST, POST, POST, POST, POST, POST);
         lista = dao.listar();
-        lista_tp = dao_.listar();
 
         Gson g = new Gson();
-        Gson d = new Gson();
-        Gson a = new Gson();
-
-        d.toJson(lista_tp);
-        g.toJson(lista) ;
-       return a.toJson(g);
-       //data
+        
+        return g.toJson(lista);
+        //data
         
 
         
@@ -74,13 +67,13 @@ public class PI4WS {
     }
     
     
-    //Select com where
+    //Select dados Usuario com where 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("Usuario/get/{login}")
-    public String buscar(@PathParam("login") int ID_USUARIO){
-        Usuario u = new Usuario(ID_USUARIO, POST, POST, POST, POST, POST);
-        u.setID_USUARIO(ID_USUARIO);
+    @Path("Usuario/get/{cpf}")
+    public String buscar(@PathParam("cpf") String cpf){
+        Banco u = new Banco(POST, cpf, cpf, cpf, cpf, cpf);
+        u.setCPF(cpf);
         
         UsuarioDAO dao = new UsuarioDAO();
         u = dao.buscar(u);
@@ -90,33 +83,49 @@ public class PI4WS {
     
     
     }
+    //logar retorna true of false
+    @GET
+    @Path("Usuario/get/logar/{email}/{senha}")
+    public boolean logar(@PathParam("email") String email,@PathParam("senha") String senha){
+        Usuario u = new Usuario(email, senha);
+        u.setEMAIL(email);
+        u.setSENHA(senha);        
+        UsuarioDAO dao = new UsuarioDAO();
+        dao.logar(u);
+        return dao.logar(u);
+    
+    
+    }
+    
+    
+    
 
     //Insert tabela Usuario
-    @POST
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Path("Usuario/inserir")
-    public boolean inserir(String content){
-        Gson g = new Gson();
-        Usuario u = (Usuario) g.fromJson(content, Usuario.class);
-        
-        UsuarioDAO dao = new UsuarioDAO();
-        return dao.inserir(u);
-    }
+//    @POST
+//    @Consumes({MediaType.APPLICATION_JSON})
+//    @Path("Usuario/inserir")
+//    public boolean inserir(String content){
+//        Gson g = new Gson();
+//        Banco u = (Banco) g.fromJson(content, Banco.class);
+//        
+//        UsuarioDAO dao = new UsuarioDAO();
+//        return dao.inserir(u);
+//    }
 
    
-    //delete com where
-    @DELETE
-    @Path("Usuario/excluir/{login}")
-    public boolean excluir (@PathParam("login")int ID_USUARIO){        
-        
-        Usuario u = new Usuario(ID_USUARIO, POST, POST, POST, POST, POST);
-        u.setID_USUARIO(ID_USUARIO);
-        
-        UsuarioDAO dao = new UsuarioDAO();
-        u = dao.buscar(u);              
-        return dao.excluir(u); 
-        
-    }
+//    //delete com where
+//    @DELETE
+//    @Path("Usuario/excluir/{login}")
+//    public boolean excluir (@PathParam("login")int ID_USUARIO){        
+//        
+//        Usuario u = new Usuario(ID_USUARIO, POST, POST, POST, POST, POST);
+//        u.setID_USUARIO(ID_USUARIO);
+//        
+//        UsuarioDAO dao = new UsuarioDAO();
+//        u = dao.buscar(u);              
+//        return dao.excluir(u); 
+//        
+//    }
     
 
     @PUT
