@@ -43,11 +43,23 @@ public class PI4WS {
 
     public PI4WS() {
     }
+
+
+    
+    
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void putJson(String content) {
+    }
+
+
+
     
     //Select all
+    //Select que retorna informações de todos os Usuarios cadastrados
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("Usuario/lista")
+    @Path("Usuario/get/todos")
     public String listar(){
     
         List<Banco> lista; 
@@ -58,19 +70,17 @@ public class PI4WS {
         Gson g = new Gson();
         
         return g.toJson(lista);
-        //data
         
-
-        
-        
-    
     }
     
     
-    //Select dados Usuario com where 
+    
+    
+    //Select que retorna informações de um Usuario
+    //passando cpf como where
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("Usuario/get/{cpf}")
+    @Path("Usuario/get/where/{cpf}")
     public String buscar(@PathParam("cpf") String cpf){
         Banco u = new Banco(POST, cpf, cpf, cpf, cpf, cpf);
         u.setCPF(cpf);
@@ -79,11 +89,15 @@ public class PI4WS {
         u = dao.buscar(u);
         
         Gson g = new Gson();       
-        return g.toJson(u);
-    
-    
+        return g.toJson(u);    
     }
-    //logar retorna true of false
+    
+    
+    
+    
+    //Select que retornta false ou true,
+    //passando e-mail e senha no where.   
+    //Usado para validar o login 
     @GET
     @Path("Usuario/get/logar/{email}/{senha}")
     public boolean logar(@PathParam("email") String email,@PathParam("senha") String senha){
@@ -92,10 +106,20 @@ public class PI4WS {
         u.setSENHA(senha);        
         UsuarioDAO dao = new UsuarioDAO();
         dao.logar(u);
-        return dao.logar(u);
-    
+        return dao.logar(u);   
     
     }
+    
+    
+ 
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -128,33 +152,29 @@ public class PI4WS {
 //    }
     
 
-    @PUT
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Path("Usuario/alterar")
-    public boolean alterar(String content){
-        Gson g = new Gson();
-        Usuario u = (Usuario) g.fromJson(content, Usuario.class);
-        
-        UsuarioDAO dao = new UsuarioDAO();
-        return dao.atualizar(u);
-    }
+//    @PUT
+//    @Consumes({MediaType.APPLICATION_JSON})
+//    @Path("Usuario/alterar")
+//    public boolean alterar(String content){
+//        Gson g = new Gson();
+//        Usuario u = (Usuario) g.fromJson(content, Usuario.class);
+//        
+//        UsuarioDAO dao = new UsuarioDAO();
+//        return dao.atualizar(u);
+//    }
+//    
     
     
     
     
-    
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void putJson(String content) {
-    }
+   
 
-//Metodos Testes para cadastrar no banco o tipo de usuario
 
     
-    //Selecet all
+    //Select que retorna todos os "tipos" de cadastros disponiveis
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("Usuario/listar_tp")
+    @Path("Cadastro/get/listar_tp")
     public String listar_tp(){
     
         List<Tp_cadastro> lista;    

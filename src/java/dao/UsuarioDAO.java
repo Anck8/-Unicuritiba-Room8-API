@@ -42,7 +42,7 @@ public class UsuarioDAO {
         "inner join telefone " + 
         "inner join tp_cadastro " + 
         "on tp_cadastro.ID_TP_CAD = usuario.tp_cadastro \n" +
-        "and usuario.id_usuario = telefone.usuario";
+        "and usuario.id_usuario = telefone.fk_usuario";
         
         List<Banco> retorno = new ArrayList<Banco>();
 
@@ -86,12 +86,12 @@ public class UsuarioDAO {
         "usuario.senha,\n" +
         "telefone.tel,\n" +
         "tp_cadastro.desc_cad\n" +
-        "from usuario\n" +
-        "inner join telefone\n" +
-        "inner join tp_cadastro\n" +
+        "from usuario " +
+        "inner join telefone " + 
+        "inner join tp_cadastro " + 
         "on tp_cadastro.ID_TP_CAD = usuario.tp_cadastro \n" +
-        "and usuario.id_usuario = telefone.usuario \n" +
-        "where usuario.cpf = ? ;";
+        "and usuario.id_usuario = telefone.fk_usuario \n" + 
+        "where usuario.cpf = ?";
          Banco retorno = null;
         
         PreparedStatement pst = Conexao.getPreparedStatement(sql);

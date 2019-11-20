@@ -27,7 +27,7 @@ public class Conexao {
      * SGBD a ser usado na conexão
      */
     private static final String usuario = "root";
-    private static final String senha = "";  
+    private static final String senha = "unicuritiba";  
     /**
      * O atributo con representa um objeto que 
      * contém a conexão com o banco de dados em si
