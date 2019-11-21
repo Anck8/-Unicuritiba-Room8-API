@@ -181,16 +181,15 @@ public class UsuarioDAO {
     
     }
     
-    public boolean excluir(Usuario usuario) 
-    {
+    public boolean excluir(Banco banco) {
         
-        String sql = "DELETE FROM USUARIO where ID_USUARIO=?";
+        String sql = "call deletar_usuario(?)";
         Boolean retorno = false;
         PreparedStatement pst = Conexao.getPreparedStatement(sql);
         try {
           
            
-            pst.setInt(1, usuario.getID_USUARIO());
+            pst.setString(1, banco.getCPF());
             if(pst.executeUpdate()>0)
             {
                 retorno = true;

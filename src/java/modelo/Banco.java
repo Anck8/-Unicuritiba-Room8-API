@@ -75,6 +75,10 @@ private	String	IMAGEM_1	;
         this.TEL = TEL;
     }
 
+    public Banco(String CPF) {
+        this.CPF = CPF;
+    }
+
     
 
 

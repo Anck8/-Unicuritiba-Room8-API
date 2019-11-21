@@ -112,7 +112,18 @@ public class PI4WS {
     
     
  
-    
+        //delete com where
+    @GET
+    @Path("Usuario/excluir/{cpf}")
+    public boolean excluir (@PathParam("cpf")String cpf){        
+        
+        Banco u = new Banco(cpf);
+        u.setCPF(cpf);
+        
+        UsuarioDAO dao = new UsuarioDAO();
+        return dao.excluir(u); 
+        
+    }
     
     
     
@@ -137,19 +148,7 @@ public class PI4WS {
 //    }
 
    
-//    //delete com where
-//    @DELETE
-//    @Path("Usuario/excluir/{login}")
-//    public boolean excluir (@PathParam("login")int ID_USUARIO){        
-//        
-//        Usuario u = new Usuario(ID_USUARIO, POST, POST, POST, POST, POST);
-//        u.setID_USUARIO(ID_USUARIO);
-//        
-//        UsuarioDAO dao = new UsuarioDAO();
-//        u = dao.buscar(u);              
-//        return dao.excluir(u); 
-//        
-//    }
+
     
 
 //    @PUT
