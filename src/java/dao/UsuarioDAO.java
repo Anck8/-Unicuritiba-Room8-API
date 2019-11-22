@@ -190,7 +190,7 @@ public class UsuarioDAO {
           
            
             pst.setString(1, banco.getCPF());
-            if(pst.executeUpdate()>0)
+            if(pst.executeUpdate()==0)
             {
                 retorno = true;
             }
