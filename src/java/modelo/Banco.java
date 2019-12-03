@@ -25,11 +25,11 @@ private	String	BAIRRO     	;
 private	String	CIDADE     	;
 private	String	ESTADO     	;
 private	String	PONTO_REF  	;
-private	String	ID_IMAGEM	;
+private	int	ID_IMAGEM	;
 private	String	LUGAR	        ;
 private	String	IMAGEM_1	;
 
-    public Banco(int ID_USUARIO, String NOME, String CPF, String EMAIL, String SENHA, String TP_CADASTRO, int ID_TP_CAD, String DESC_CAD, int D_TEL, String TEL, int ID_LUGAR, int USUARIO, String TITULO, String DESCRICAO, String CEP, String ENDERECO, String NUMERO, String COMPLEMENTO, String BAIRRO, String CIDADE, String ESTADO, String PONTO_REF, String ID_IMAGEM, String LUGAR, String IMAGEM_1) {
+    public Banco(int ID_USUARIO, String NOME, String CPF, String EMAIL, String SENHA, String TP_CADASTRO, int ID_TP_CAD, String DESC_CAD, int D_TEL, String TEL, int ID_LUGAR, int USUARIO, String TITULO, String DESCRICAO, String CEP, String ENDERECO, String NUMERO, String COMPLEMENTO, String BAIRRO, String CIDADE, String ESTADO, String PONTO_REF, int ID_IMAGEM, String LUGAR, String IMAGEM_1) {
         this.ID_USUARIO = ID_USUARIO;
         this.NOME = NOME;
         this.CPF = CPF;
@@ -79,7 +79,30 @@ private	String	IMAGEM_1	;
         this.CPF = CPF;
     }
 
+    public Banco() {
+    }
+
+    public Banco(String TITULO, String DESCRICAO, String CEP, String ENDERECO, String NUMERO, String COMPLEMENTO, String BAIRRO, String CIDADE, String ESTADO, String PONTO_REF) {
+        this.TITULO = TITULO;
+        this.DESCRICAO = DESCRICAO;
+        this.CEP = CEP;
+        this.ENDERECO = ENDERECO;
+        this.NUMERO = NUMERO;
+        this.COMPLEMENTO = COMPLEMENTO;
+        this.BAIRRO = BAIRRO;
+        this.CIDADE = CIDADE;
+        this.ESTADO = ESTADO;
+        this.PONTO_REF = PONTO_REF;
+    }
+
+    public Banco(int ID_LUGAR) {
+        this.ID_LUGAR = ID_LUGAR;
+    }
+
+  
+
     
+   
 
 
 
@@ -261,11 +284,11 @@ private	String	IMAGEM_1	;
         this.PONTO_REF = PONTO_REF;
     }
 
-    public String getID_IMAGEM() {
+    public int getID_IMAGEM() {
         return ID_IMAGEM;
     }
 
-    public void setID_IMAGEM(String ID_IMAGEM) {
+    public void setID_IMAGEM(int ID_IMAGEM) {
         this.ID_IMAGEM = ID_IMAGEM;
     }
 

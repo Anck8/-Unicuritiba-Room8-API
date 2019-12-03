@@ -12,7 +12,7 @@ package modelo;
  */
 public class Usuario {
     
-    private int ID_USUARIO;
+    private int    ID_USUARIO;
     private String NOME;
     private String CPF;
     private String EMAIL;

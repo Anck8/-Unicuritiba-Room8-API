@@ -54,7 +54,7 @@ public class PI4WS {
 
 
 
-    
+    //(OK)
     //Select all
     //Select que retorna informações de todos os Usuarios cadastrados
     @GET
@@ -75,18 +75,19 @@ public class PI4WS {
     
     
     
-    
+    //(OK)
     //Select que retorna informações de um Usuario
     //passando cpf como where
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("Usuario/get/where/{cpf}")
-    public String buscar(@PathParam("cpf") String cpf){
+    public String buscar(@PathParam("cpf") String cpf)
+    {
         Banco u = new Banco(POST, cpf, cpf, cpf, cpf, cpf);
         u.setCPF(cpf);
         
         UsuarioDAO dao = new UsuarioDAO();
-        u = dao.buscar(u);
+        u = dao.buscar_usuario(u);
         
         Gson g = new Gson();       
         return g.toJson(u);    
@@ -94,13 +95,14 @@ public class PI4WS {
     
     
     
-    
+    //(OK)
     //Select que retornta false ou true,
     //passando e-mail e senha no where.   
     //Usado para validar o login 
     @GET
     @Path("Usuario/get/logar/{email}/{senha}")
-    public boolean logar(@PathParam("email") String email,@PathParam("senha") String senha){
+    public boolean logar(@PathParam("email") String email,@PathParam("senha") String senha)
+    {
         Usuario u = new Usuario(email, senha);
         u.setEMAIL(email);
         u.setSENHA(senha);        
@@ -111,18 +113,99 @@ public class PI4WS {
     }
     
     
- 
-        //delete com where
+    
+    //(OK)
+    //delete Usuario  com where cpf
     @GET
     @Path("Usuario/excluir/{cpf}")
-    public boolean excluir (@PathParam("cpf")String cpf){        
+    public boolean excluir (@PathParam("cpf")String cpf)
+    {        
         
         Banco u = new Banco(cpf);
         u.setCPF(cpf);
         
         UsuarioDAO dao = new UsuarioDAO();
-        return dao.excluir(u); 
+        return dao.excluir_usuario(u); 
         
+    }
+    
+    
+    
+       
+    //(OK)
+    //Insert tabela Usuario e Telefone
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Path("Usuario/inserir")
+    public boolean inserir_usuario(String content){
+        Gson g = new Gson();
+        Banco u = (Banco) g.fromJson(content, Banco.class);
+        
+        UsuarioDAO dao = new UsuarioDAO();
+        return dao.inserir_usuario(u);
+    }
+
+       
+    //(OK)
+    //Atualiza usuario
+    //passa um Jsom com os dados atualizados Usuario
+    @PUT
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Path("Usuario/alterar")
+    public boolean alterar(String content){
+        Gson g = new Gson();
+        Banco u = (Banco) g.fromJson(content, Banco.class);
+        
+        UsuarioDAO dao = new UsuarioDAO();
+        return dao.atualizar_usuario(u);
+    }
+    
+    
+    
+    
+    /*______________________________________________*/
+    /*CRUD Lugar*/
+    
+    
+    
+    
+    //(OK)
+    //Visualizar informações do lugar selecionado passando id_lugar
+    //(tabela lugar)
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("Lugar/get/where/lugar/{id_lugar}")
+    public String buscar_lugar(@PathParam("id_lugar") int id_lugar)
+    {
+        Banco u = new Banco();
+        u.setID_LUGAR(id_lugar);
+        
+        UsuarioDAO dao = new UsuarioDAO();
+        u = dao.buscar_lugar_lugar(u);
+        
+        Gson g = new Gson();       
+        return g.toJson(u);    
+    }
+    
+    
+    
+    
+    //(ok)
+    //retorna as fotos do local passando id_lugar
+    //(tabela lugar)
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("Lugar/get/where/fotos/{id_lugar}")
+    public String buscar_lugar_fotos(@PathParam("id_lugar") int id_lugar)
+    {
+        Banco u = new Banco();
+        u.setID_LUGAR(id_lugar);
+        
+        UsuarioDAO dao = new UsuarioDAO();
+        u = dao.buscar_lugar_fotos(u);
+        
+        Gson g = new Gson();       
+        return g.toJson(u);    
     }
     
     
@@ -130,46 +213,62 @@ public class PI4WS {
     
     
     
+    //(OK)
+    //delete com where. Lugar e Fotos
+    @GET
+    @Path("Lugar/excluir/{id_lugar}")
+    public boolean excluir_lugar (@PathParam("id_lugar")int id_lugar)
+    {        
+        
+        Banco u = new Banco(id_lugar);
+        u.setID_LUGAR(id_lugar);
+        
+        UsuarioDAO dao = new UsuarioDAO();
+        return dao.excluir_lugar(u); 
+        
+    }
     
     
     
+    
+    
+    //(OK)
+    //Insert tabela Lugar
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Path("Lugar/inserir")
+    public boolean inserir_lugar(String content){
+        Gson g = new Gson();
+        Banco u = (Banco) g.fromJson(content, Banco.class);
+        
+        UsuarioDAO dao = new UsuarioDAO();
+        return dao.inserir_lugar(u);
+    }
+    
+    
+    
+    //Atualiza tabela lugar
+    @PUT
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Path("Lugar/alterar")
+    public boolean alterar_lugar(String content){
+        Gson g = new Gson();
+        Banco u = (Banco) g.fromJson(content, Banco.class);
+        
+        UsuarioDAO dao = new UsuarioDAO();
+        return dao.atualizar_lugar(u);
+    }
+    
+    
+    
+ 
     
 
-    //Insert tabela Usuario
-//    @POST
-//    @Consumes({MediaType.APPLICATION_JSON})
-//    @Path("Usuario/inserir")
-//    public boolean inserir(String content){
-//        Gson g = new Gson();
-//        Banco u = (Banco) g.fromJson(content, Banco.class);
-//        
-//        UsuarioDAO dao = new UsuarioDAO();
-//        return dao.inserir(u);
-//    }
-
-   
-
-    
-
-//    @PUT
-//    @Consumes({MediaType.APPLICATION_JSON})
-//    @Path("Usuario/alterar")
-//    public boolean alterar(String content){
-//        Gson g = new Gson();
-//        Usuario u = (Usuario) g.fromJson(content, Usuario.class);
-//        
-//        UsuarioDAO dao = new UsuarioDAO();
-//        return dao.atualizar(u);
-//    }
-//    
     
     
     
     
-   
-
-
-    
+    //(OK)
     //Select que retorna todos os "tipos" de cadastros disponiveis
     @GET
     @Produces(MediaType.APPLICATION_JSON)
