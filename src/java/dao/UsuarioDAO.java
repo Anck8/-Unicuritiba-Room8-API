@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.Banco;
+import modelo.Fotos;
+import modelo.Lugar;
 import modelo.Telefone;
 import modelo.Usuario;
 
@@ -54,7 +56,7 @@ public class UsuarioDAO {
             ResultSet res = pst.executeQuery();
             while(res.next())
             {
-                Banco item = new Banco(sql, sql, sql, sql, sql, sql);
+                Banco item = new Banco(sql);
                 item.setNOME(res.getString("NOME")); 
                 item.setCPF(res.getString("CPF"));              
                 item.setEMAIL(res.getString("EMAIL"));              
@@ -92,7 +94,7 @@ public class UsuarioDAO {
             
             if(res.next())
             {
-                retorno = new Banco(sql, sql, sql, sql, sql, sql);
+                retorno = new Banco(sql);
                 retorno.setNOME(res.getString("NOME"));
                 retorno.setCPF(res.getString("CPF"));
                 retorno.setEMAIL(res.getString("EMAIL"));
@@ -175,7 +177,7 @@ public class UsuarioDAO {
     
     }
     
-    public boolean excluir_usuario(Banco banco) 
+    public boolean excluir_usuario(String  cpf) 
     {
         
         String sql = "CALL DELETAR_USUARIO(?)";
@@ -184,7 +186,7 @@ public class UsuarioDAO {
         try {
           
            
-            pst.setString(1, banco.getCPF());
+            pst.setString(1,cpf);
             if(pst.executeUpdate()==0)
             {
                 retorno = true;
@@ -228,21 +230,22 @@ public class UsuarioDAO {
     /*_______________________________________________*/
     /* crud Lugar */
     
-    
-     public Banco buscar_lugar_lugar(Banco banco)
+    /*Verificar */
+     public ArrayList <Lugar> buscar_lugar_lugar(int  id_usuario)
     {
         String sql = "CALL SELECT__LUGAR_LUGAR(?);";
-         Banco retorno = null;
-        
+        ArrayList<Lugar> lugares = new ArrayList();
+         Lugar retorno = null;
+
         PreparedStatement pst = Conexao.getPreparedStatement(sql);
         try {
-           
-            pst.setInt(1, banco.getID_LUGAR());
+
+            pst.setInt(1, id_usuario);
             ResultSet res = pst.executeQuery();
-            
-            if(res.next())
-            {
-                retorno = new Banco(sql, sql, sql, sql, sql, sql, sql, sql, sql, sql);
+
+            while (res.next()) {
+                retorno = new Lugar();
+                retorno.setID_LUGAR(res.getInt("ID_LUGAR"));
                 retorno.setTITULO(res.getString("TITULO"));
                 retorno.setDESCRICAO(res.getString("DESCRICAO"));
                 retorno.setCEP(res.getString("CEP"));
@@ -254,39 +257,39 @@ public class UsuarioDAO {
                 retorno.setESTADO(res.getString("ESTADO"));
                 retorno.setPONTO_REF(res.getString("PONTO_REF"));
 
+                lugares.add(retorno);
             }
-               
-            
-            
+
+
+
         } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);   
-            
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+
         }
-        
-        return retorno;
-    
-    
+        return lugares;
     }
      
      
      
      
-     public Banco buscar_lugar_fotos(Banco banco)
+     public ArrayList<Fotos> buscar_lugar_fotos(int  id_lugar)
     {
         String sql = "CALL SELECT__LUGAR_FOTOS(?);";
-         Banco retorno = null;
+                ArrayList<Fotos> fotos = new ArrayList();
+ 
+        Fotos retorno = null;
         
         PreparedStatement pst = Conexao.getPreparedStatement(sql);
         try {
            
-            pst.setInt(1, banco.getID_LUGAR());
+            pst.setInt(1, id_lugar);
             ResultSet res = pst.executeQuery();
             
-            if(res.next())
+            while(res.next())
             {
-                retorno = new Banco(sql);
+                retorno = new Fotos();
                 retorno.setIMAGEM_1(res.getString("IMAGEM_1"));
-           
+           fotos.add(retorno);
             }
                
             
@@ -296,7 +299,7 @@ public class UsuarioDAO {
             
         }
         
-        return retorno;
+        return fotos;
     
     
     }

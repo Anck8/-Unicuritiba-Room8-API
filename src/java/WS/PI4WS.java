@@ -26,6 +26,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import modelo.Banco;
+import modelo.Fotos;
+import modelo.Lugar;
 import modelo.Tp_cadastro;
 import modelo.Usuario;
 
@@ -64,7 +66,7 @@ public class PI4WS {
     
         List<Banco> lista; 
         UsuarioDAO dao= new UsuarioDAO();
-        Banco u = new Banco(POST, POST, POST, POST, POST, POST);
+        Banco u = new Banco();
         lista = dao.listar();
 
         Gson g = new Gson();
@@ -83,7 +85,7 @@ public class PI4WS {
     @Path("Usuario/get/where/{cpf}")
     public String buscar(@PathParam("cpf") String cpf)
     {
-        Banco u = new Banco(POST, cpf, cpf, cpf, cpf, cpf);
+        Banco u = new Banco(cpf);
         u.setCPF(cpf);
         
         UsuarioDAO dao = new UsuarioDAO();
@@ -121,11 +123,9 @@ public class PI4WS {
     public boolean excluir (@PathParam("cpf")String cpf)
     {        
         
-        Banco u = new Banco(cpf);
-        u.setCPF(cpf);
         
         UsuarioDAO dao = new UsuarioDAO();
-        return dao.excluir_usuario(u); 
+        return dao.excluir_usuario(cpf); 
         
     }
     
@@ -169,19 +169,19 @@ public class PI4WS {
     
     
     
-    //(OK)
-    //Visualizar informações do lugar selecionado passando id_lugar
+    //(Verificar)
+    //Visualizar todos os lugares cadastrados pelo usuario
     //(tabela lugar)
+    //passa id_usuario
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("Lugar/get/where/lugar/{id_lugar}")
-    public String buscar_lugar(@PathParam("id_lugar") int id_lugar)
+    @Path("Lugar/get/where/lugar/{id_usuario}")
+    public String buscar_lugar(@PathParam("id_usuario") int id_usuario)
     {
-        Banco u = new Banco();
-        u.setID_LUGAR(id_lugar);
+        ArrayList<Lugar> u = new ArrayList<>();
         
         UsuarioDAO dao = new UsuarioDAO();
-        u = dao.buscar_lugar_lugar(u);
+        u = dao.buscar_lugar_lugar(id_usuario);
         
         Gson g = new Gson();       
         return g.toJson(u);    
@@ -198,11 +198,10 @@ public class PI4WS {
     @Path("Lugar/get/where/fotos/{id_lugar}")
     public String buscar_lugar_fotos(@PathParam("id_lugar") int id_lugar)
     {
-        Banco u = new Banco();
-        u.setID_LUGAR(id_lugar);
+        ArrayList<Fotos> u = new ArrayList<Fotos>();
         
         UsuarioDAO dao = new UsuarioDAO();
-        u = dao.buscar_lugar_fotos(u);
+        u = dao.buscar_lugar_fotos(id_lugar);
         
         Gson g = new Gson();       
         return g.toJson(u);    

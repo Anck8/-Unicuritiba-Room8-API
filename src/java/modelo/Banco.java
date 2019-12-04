@@ -29,6 +29,97 @@ private	int	ID_IMAGEM	;
 private	String	LUGAR	        ;
 private	String	IMAGEM_1	;
 
+//    public Banco(int ID_USUARIO, String NOME, String CPF, String EMAIL, String SENHA, String TP_CADASTRO, int ID_TP_CAD, String DESC_CAD, int D_TEL, String TEL, int ID_LUGAR, int USUARIO, String TITULO, String DESCRICAO, String CEP, String ENDERECO, String NUMERO, String COMPLEMENTO, String BAIRRO, String CIDADE, String ESTADO, String PONTO_REF, int ID_IMAGEM, String LUGAR, String IMAGEM_1) {
+//        this.ID_USUARIO = ID_USUARIO;
+//        this.NOME = NOME;
+//        this.CPF = CPF;
+//        this.EMAIL = EMAIL;
+//        this.SENHA = SENHA;
+//        this.TP_CADASTRO = TP_CADASTRO;
+//        this.ID_TP_CAD = ID_TP_CAD;
+//        this.DESC_CAD = DESC_CAD;
+//        this.D_TEL = D_TEL;
+//        this.TEL = TEL;
+//        this.ID_LUGAR = ID_LUGAR;
+//        this.USUARIO = USUARIO;
+//        this.TITULO = TITULO;
+//        this.DESCRICAO = DESCRICAO;
+//        this.CEP = CEP;
+//        this.ENDERECO = ENDERECO;
+//        this.NUMERO = NUMERO;
+//        this.COMPLEMENTO = COMPLEMENTO;
+//        this.BAIRRO = BAIRRO;
+//        this.CIDADE = CIDADE;
+//        this.ESTADO = ESTADO;
+//        this.PONTO_REF = PONTO_REF;
+//        this.ID_IMAGEM = ID_IMAGEM;
+//        this.LUGAR = LUGAR;
+//        this.IMAGEM_1 = IMAGEM_1;
+//    }
+//
+//    public Banco(String NOME, String CPF, String EMAIL, String SENHA, String DESC_CAD, String TEL) {
+//        this.NOME = NOME;
+//        this.CPF = CPF;
+//        this.EMAIL = EMAIL;
+//        this.SENHA = SENHA;
+//        this.DESC_CAD = DESC_CAD;
+//        this.TEL = TEL;
+//    }
+//
+//    public Banco(String NOME, String CPF, String EMAIL, String SENHA, int ID_TP_CAD, String TEL) {
+//        this.NOME = NOME;
+//        this.CPF = CPF;
+//        this.EMAIL = EMAIL;
+//        this.SENHA = SENHA;
+//        this.ID_TP_CAD = ID_TP_CAD;
+//        this.TEL = TEL;
+//    }
+//
+    public Banco(String CPF) {
+        this.CPF = CPF;
+    }
+//
+//    public Banco() {
+//    }
+//
+//    public Banco(String TITULO, String DESCRICAO, String CEP, String ENDERECO, String NUMERO, String COMPLEMENTO, String BAIRRO, String CIDADE, String ESTADO, String PONTO_REF) {
+//        this.TITULO = TITULO;
+//        this.DESCRICAO = DESCRICAO;
+//        this.CEP = CEP;
+//        this.ENDERECO = ENDERECO;
+//        this.NUMERO = NUMERO;
+//        this.COMPLEMENTO = COMPLEMENTO;
+//        this.BAIRRO = BAIRRO;
+//        this.CIDADE = CIDADE;
+//        this.ESTADO = ESTADO;
+//        this.PONTO_REF = PONTO_REF;
+//    }
+//
+    public Banco(int ID_LUGAR) {
+        this.ID_LUGAR = ID_LUGAR;
+    }
+//
+//    public Banco(int ID_USUARIO,int ID_LUGAR, String TITULO, String DESCRICAO, String CEP, String ENDERECO, String NUMERO, String COMPLEMENTO, String BAIRRO, String CIDADE, String ESTADO, String PONTO_REF) {
+//        this.ID_USUARIO = ID_USUARIO;
+//        this.ID_LUGAR = ID_LUGAR;
+//        this.TITULO = TITULO;
+//        this.DESCRICAO = DESCRICAO;
+//        this.CEP = CEP;
+//        this.ENDERECO = ENDERECO;
+//        this.NUMERO = NUMERO;
+//        this.COMPLEMENTO = COMPLEMENTO;
+//        this.BAIRRO = BAIRRO;
+//        this.CIDADE = CIDADE;
+//        this.ESTADO = ESTADO;
+//        this.PONTO_REF = PONTO_REF;
+//    }
+//
+//   
+//  
+
+    public Banco() {
+    }
+
     public Banco(int ID_USUARIO, String NOME, String CPF, String EMAIL, String SENHA, String TP_CADASTRO, int ID_TP_CAD, String DESC_CAD, int D_TEL, String TEL, int ID_LUGAR, int USUARIO, String TITULO, String DESCRICAO, String CEP, String ENDERECO, String NUMERO, String COMPLEMENTO, String BAIRRO, String CIDADE, String ESTADO, String PONTO_REF, int ID_IMAGEM, String LUGAR, String IMAGEM_1) {
         this.ID_USUARIO = ID_USUARIO;
         this.NOME = NOME;
@@ -56,50 +147,6 @@ private	String	IMAGEM_1	;
         this.LUGAR = LUGAR;
         this.IMAGEM_1 = IMAGEM_1;
     }
-
-    public Banco(String NOME, String CPF, String EMAIL, String SENHA, String DESC_CAD, String TEL) {
-        this.NOME = NOME;
-        this.CPF = CPF;
-        this.EMAIL = EMAIL;
-        this.SENHA = SENHA;
-        this.DESC_CAD = DESC_CAD;
-        this.TEL = TEL;
-    }
-
-    public Banco(String NOME, String CPF, String EMAIL, String SENHA, int ID_TP_CAD, String TEL) {
-        this.NOME = NOME;
-        this.CPF = CPF;
-        this.EMAIL = EMAIL;
-        this.SENHA = SENHA;
-        this.ID_TP_CAD = ID_TP_CAD;
-        this.TEL = TEL;
-    }
-
-    public Banco(String CPF) {
-        this.CPF = CPF;
-    }
-
-    public Banco() {
-    }
-
-    public Banco(String TITULO, String DESCRICAO, String CEP, String ENDERECO, String NUMERO, String COMPLEMENTO, String BAIRRO, String CIDADE, String ESTADO, String PONTO_REF) {
-        this.TITULO = TITULO;
-        this.DESCRICAO = DESCRICAO;
-        this.CEP = CEP;
-        this.ENDERECO = ENDERECO;
-        this.NUMERO = NUMERO;
-        this.COMPLEMENTO = COMPLEMENTO;
-        this.BAIRRO = BAIRRO;
-        this.CIDADE = CIDADE;
-        this.ESTADO = ESTADO;
-        this.PONTO_REF = PONTO_REF;
-    }
-
-    public Banco(int ID_LUGAR) {
-        this.ID_LUGAR = ID_LUGAR;
-    }
-
-  
 
     
    
