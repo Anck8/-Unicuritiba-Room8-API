@@ -24,6 +24,13 @@ private String CIDADE;
 private String ESTADO;  
 private String PONTO_REF; 
 
+    public Lugar() {
+    }
+
+  
+
+  
+
     public int getID_LUGAR() {
         return ID_LUGAR;
     }
@@ -120,5 +127,24 @@ private String PONTO_REF;
         this.PONTO_REF = PONTO_REF;
     }
 
+    public Lugar(int ID_LUGAR, int USUARIO, String TITULO, String DESCRICAO, String CEP, String ENDERECO, String NUMERO, String COMPLEMENTO, String BAIRRO, String CIDADE, String ESTADO, String PONTO_REF) {
+        this.ID_LUGAR = ID_LUGAR;
+        this.USUARIO = USUARIO;
+        this.TITULO = TITULO;
+        this.DESCRICAO = DESCRICAO;
+        this.CEP = CEP;
+        this.ENDERECO = ENDERECO;
+        this.NUMERO = NUMERO;
+        this.COMPLEMENTO = COMPLEMENTO;
+        this.BAIRRO = BAIRRO;
+        this.CIDADE = CIDADE;
+        this.ESTADO = ESTADO;
+        this.PONTO_REF = PONTO_REF;
+    }
+
+   
+
+    
+    
     
 }
