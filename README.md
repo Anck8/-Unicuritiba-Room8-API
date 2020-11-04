@@ -7,4 +7,3 @@ do curso de ADS.
 
 ## SQL
 `db_sql`.
-

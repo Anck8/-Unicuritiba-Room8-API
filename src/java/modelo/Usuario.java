@@ -12,13 +12,41 @@ package modelo;
  */
 public class Usuario {
     
-    private int ID_USUARIO;
+    private int    ID_USUARIO;
     private String NOME;
     private String CPF;
     private String EMAIL;
     private String SENHA;
     private String TP_CADASTRO;
 
+    public Usuario(int ID_USUARIO, String NOME, String CPF, String EMAIL, String SENHA, String TP_CADASTRO) {
+        this.ID_USUARIO = ID_USUARIO;
+        this.NOME = NOME;
+        this.CPF = CPF;
+        this.EMAIL = EMAIL;
+        this.SENHA = SENHA;
+        this.TP_CADASTRO = TP_CADASTRO;
+    }
+
+    public Usuario() {
+    }
+
+    public Usuario(String NOME, String CPF, String EMAIL, String SENHA, String TP_CADASTRO) {
+        this.NOME = NOME;
+        this.CPF = CPF;
+        this.EMAIL = EMAIL;
+        this.SENHA = SENHA;
+        this.TP_CADASTRO = TP_CADASTRO;
+    }
+
+    public Usuario(String EMAIL, String SENHA) {
+        this.EMAIL = EMAIL;
+        this.SENHA = SENHA;
+    }
+
+    
+    
+    
     public int getID_USUARIO() {
         return ID_USUARIO;
     }
