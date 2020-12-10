@@ -6,6 +6,7 @@
 
 package dao;
 
+import com.google.gson.JsonObject;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,6 +17,7 @@ import java.util.logging.Logger;
 import modelo.Banco;
 import modelo.Fotos;
 import modelo.Lugar;
+import modelo.Retorno;
 import modelo.Telefone;
 import modelo.Usuario;
 
@@ -100,8 +102,7 @@ public class UsuarioDAO {
                 retorno.setEMAIL(res.getString("EMAIL"));
                 retorno.setSENHA(res.getString("SENHA"));
                 retorno.setTEL(res.getString("TEL"));              
-                retorno.setDESC_CAD(res.getString("DESC_CAD"));
-                
+                retorno.setDESC_CAD(res.getString("DESC_CAD"));              
                 
             }
                
@@ -119,10 +120,11 @@ public class UsuarioDAO {
     
     
     
-    public boolean inserir_usuario(Banco banco)
-    {
+    public  Retorno inserir_usuario(Banco banco)
+    {                   
+        Retorno retorno = new Retorno();
+        JsonObject jsonObject = new JsonObject();
         String sql = "CALL INSERE_USUARIO(?,?,?,?,?,?);";
-        Boolean retorno = false;
         PreparedStatement pst = Conexao.getPreparedStatement(sql);
         try {
             pst.setString(1, banco.getNOME());
@@ -132,15 +134,15 @@ public class UsuarioDAO {
             pst.setString(5, banco.getSENHA());
             pst.setInt(6, banco.getID_TP_CAD());
             if(pst.executeUpdate()>0)
-            {
-                retorno = true;
-            }
+            {        
+
+            retorno = new Retorno();
+                retorno.setRETORNO("inserido");       }
                 
             
             
         } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-            retorno = false;
+                retorno.setRETORNO("erro");
         }
         
         return retorno;
@@ -203,21 +205,33 @@ public class UsuarioDAO {
     
     } 
 
-    public boolean logar (Usuario usuario) 
+    public Usuario logar (Usuario usuario) 
     {
         String sql = "SELECT * FROM USUARIO where EMAIL=? AND SENHA=?";
-        Boolean retorno = false;
+         Usuario retorno = null;
         PreparedStatement pst = Conexao.getPreparedStatement(sql);
         try {
             pst.setString(1, usuario.getEMAIL());
             pst.setString(2, usuario.getSENHA());
             ResultSet res = pst.executeQuery();
             if(res.next()) {
-                retorno = true;
-            }
-        } catch (SQLException ex) {
+                
+                
+                retorno = new Usuario();
+                retorno.setID_USUARIO(res.getInt("ID_USUARIO"));
+                retorno.setNOME(res.getString("NOME"));
+                retorno.setCPF(res.getString("CPF"));
+                retorno.setEMAIL(res.getString("EMAIL"));
+                retorno.setSENHA(res.getString("SENHA"));
+                retorno.setTP_CADASTRO(res.getString("TP_CADASTRO"));
+
+                
+                            }
+            else {retorno=null;}
+        } 
+        
+        catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-            retorno = false;
         }
         return retorno;
     } 
@@ -333,10 +347,10 @@ public class UsuarioDAO {
 
     
     
-    public boolean inserir_lugar(Banco banco)
+    public Retorno inserir_lugar(Banco banco)
     {
         String sql = "  CALL INSERE_LUGAR(?,?,?,?,?,?,?,?,?,?,?,?);";
-        Boolean retorno = false;
+        Retorno retorno = new Retorno();
         PreparedStatement pst = Conexao.getPreparedStatement(sql);
         try {
             pst.setString(1, banco.getTITULO());
@@ -355,14 +369,16 @@ public class UsuarioDAO {
          
             if(pst.executeUpdate()>0)
             {
-                retorno = true;
+               retorno = new Retorno();
+                retorno.setRETORNO("inserido"); 
             }
                 
             
             
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-            retorno = false;
+                            retorno.setRETORNO("erro"); 
+
         }
         
         return retorno;
@@ -407,10 +423,71 @@ public class UsuarioDAO {
     
     
     
+    public Retorno inserir_fotos (Fotos fotos)
+    {
+        String sql = "  CALL INSERE_LUGAR_FOTOS(?,?,?,?);";
+        Retorno retorno = new Retorno();
+        PreparedStatement pst = Conexao.getPreparedStatement(sql);
+        try {
+            pst.setString(1, fotos.getIMAGEM_1());
+            pst.setString(2, fotos.getIMAGEM_2());
+            pst.setString(3, fotos.getIMAGEM_3());
+            pst.setString(4, fotos.getIMAGEM_4());
+            
+            
+            if(pst.executeUpdate()>0)
+            {
+               retorno = new Retorno();
+                retorno.setRETORNO("inserido"); 
+            }
+                
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+                            retorno.setRETORNO("erro"); 
+
+        }
+        
+        return retorno;
+    
+    }   
     
     
     
+  public ArrayList<Banco> buscar_lugar_feed()
+    {
+        String sql = "CALL SELECT_FEED;";
+                ArrayList<Banco> banco = new ArrayList();
+ 
+        Banco retorno = null;
+        
+        PreparedStatement pst = Conexao.getPreparedStatement(sql);
+        try {
+           
+            ResultSet res = pst.executeQuery();
+            
+            while(res.next())
+            {
+                retorno = new Banco();
+                retorno.setID_LUGAR(res.getInt("ID_LUGAR"));
+                retorno.setTITULO(res.getString("TITULO"));
+                retorno.setDESCRICAO(res.getString("DESCRICAO"));               
+                retorno.setIMAGEM_1(res.getString("IMAGEM_1"));
+           banco.add(retorno);
+            }
+               
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);   
+            
+        }
+        
+        return banco;
     
+    
+    }
     
 }
 

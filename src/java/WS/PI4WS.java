@@ -103,14 +103,16 @@ public class PI4WS {
     //Usado para validar o login 
     @GET
     @Path("Usuario/get/logar/{email}/{senha}")
-    public boolean logar(@PathParam("email") String email,@PathParam("senha") String senha)
+    public String logar(@PathParam("email") String email,@PathParam("senha") String senha)
     {
         Usuario u = new Usuario(email, senha);
         u.setEMAIL(email);
         u.setSENHA(senha);        
         UsuarioDAO dao = new UsuarioDAO();
-        dao.logar(u);
-        return dao.logar(u);   
+       u = dao.logar(u);
+        
+       Gson g = new Gson();       
+        return g.toJson(u);    
     
     }
     
@@ -137,12 +139,13 @@ public class PI4WS {
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Path("Usuario/inserir")
-    public boolean inserir_usuario(String content){
+    public String inserir_usuario(String content){
         Gson g = new Gson();
         Banco u = (Banco) g.fromJson(content, Banco.class);
         
         UsuarioDAO dao = new UsuarioDAO();
-        return dao.inserir_usuario(u);
+
+        return g.toJson(dao.inserir_usuario(u));    
     }
 
        
@@ -236,12 +239,15 @@ public class PI4WS {
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Path("Lugar/inserir")
-    public boolean inserir_lugar(String content){
+    public String inserir_lugar(String content){
         Gson g = new Gson();
         Banco u = (Banco) g.fromJson(content, Banco.class);
         
+        
+        
+        
         UsuarioDAO dao = new UsuarioDAO();
-        return dao.inserir_lugar(u);
+        return  g.toJson(dao.inserir_lugar(u));
     }
     
     
@@ -259,7 +265,18 @@ public class PI4WS {
     }
     
     
-    
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Path("Lugar/inserir/fotos")
+    public String inserir_fotos(String content){
+        Gson g = new Gson();
+        Fotos u = (Fotos) g.fromJson(content, Fotos.class);
+        
+        UsuarioDAO dao = new UsuarioDAO();
+
+         return  g.toJson (dao.inserir_fotos(u));
+   
+                }
  
     
 
@@ -282,4 +299,23 @@ public class PI4WS {
         return g.toJson(lista);
     
     }
+    
+    
+     //(OK)
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("Lugar/get/select_feed")
+    public String select_feed()
+    {
+        ArrayList<Banco> u = new ArrayList<Banco>();
+        
+        UsuarioDAO dao = new UsuarioDAO();
+        u = dao.buscar_lugar_feed();
+        
+        Gson g = new Gson();       
+        return g.toJson(u);    
+    }
+    
+    
+    
 }
