@@ -97,6 +97,7 @@ public class UsuarioDAO {
             if(res.next())
             {
                 retorno = new Banco(sql);
+                retorno.setID_USUARIO(res.getInt("ID_USUARIO"));
                 retorno.setNOME(res.getString("NOME"));
                 retorno.setCPF(res.getString("CPF"));
                 retorno.setEMAIL(res.getString("EMAIL"));
@@ -149,10 +150,10 @@ public class UsuarioDAO {
     
     }   
     
-    public boolean atualizar_usuario(Banco banco)
+    public Retorno atualizar_usuario(Banco banco)
     {
         String sql = "CALL ATUALIZA_USUARIO(?,?,?,?,?,?,?);";
-        Boolean retorno = false;
+        Retorno retorno = new Retorno();
         PreparedStatement pst = Conexao.getPreparedStatement(sql);
         try {
           
@@ -165,14 +166,14 @@ public class UsuarioDAO {
             pst.setInt(7, banco.getID_TP_CAD());
             if(pst.executeUpdate()>0)
             {
-                retorno = true;
+                retorno.setRETORNO("inserido");
             }
                 
             
             
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-            retorno = false;
+                retorno.setRETORNO("erro");
         }
         
         return retorno;
@@ -319,11 +320,11 @@ public class UsuarioDAO {
     }
      
      
-     public boolean excluir_lugar(Banco banco) 
+     public Retorno excluir_lugar(Banco banco) 
     {
         
         String sql = "CALL DELETAR_LUGAR(?);";
-        Boolean retorno = false;
+        Retorno retorno = new Retorno();;
         PreparedStatement pst = Conexao.getPreparedStatement(sql);
         try {
           
@@ -331,14 +332,15 @@ public class UsuarioDAO {
             pst.setInt(1, banco.getID_LUGAR());
             if(pst.executeUpdate()==0)
             {
-                retorno = true;
+                retorno = new Retorno();
+                retorno.setRETORNO("removido"); 
             }
                 
             
             
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-            retorno = false;
+                            retorno.setRETORNO("erro"); 
         }
         
         return retorno;

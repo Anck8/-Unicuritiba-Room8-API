@@ -155,12 +155,12 @@ public class PI4WS {
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Path("Usuario/alterar")
-    public boolean alterar(String content){
+    public String alterar(String content){
         Gson g = new Gson();
         Banco u = (Banco) g.fromJson(content, Banco.class);
         
         UsuarioDAO dao = new UsuarioDAO();
-        return dao.atualizar_usuario(u);
+        return g.toJson(dao.atualizar_usuario(u));
     }
     
     
@@ -219,14 +219,15 @@ public class PI4WS {
     //delete com where. Lugar e Fotos
     @GET
     @Path("Lugar/excluir/{id_lugar}")
-    public boolean excluir_lugar (@PathParam("id_lugar")int id_lugar)
-    {        
+    public String excluir_lugar (@PathParam("id_lugar")int id_lugar)
+    {                Gson g = new Gson();
+
         
         Banco u = new Banco(id_lugar);
         u.setID_LUGAR(id_lugar);
         
         UsuarioDAO dao = new UsuarioDAO();
-        return dao.excluir_lugar(u); 
+        return  g.toJson(dao.excluir_lugar(u)); 
         
     }
     
